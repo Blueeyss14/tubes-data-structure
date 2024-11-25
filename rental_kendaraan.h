@@ -41,7 +41,7 @@ void deleteLast(list &L);
 void deleteAfter(list &L, address Q);
 
 address findData(list &L, string merkKendaraan);
-void deleteData(list &L, string data1);
+void deleteData(list &L, string data);
 
 void sortKendaraan(list &L, string kriteria);
 

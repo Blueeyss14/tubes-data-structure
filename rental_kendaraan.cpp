@@ -107,8 +107,8 @@ address findData(list &L, string merkKendaraan) {
     return NULL;
 }
 
-void deleteData(list &L, string data1) {
-    address P = findData(L, data1);
+void deleteData(list &L, string data) {
+    address P = findData(L, data);
     if (P != NULL) {
         if (P == first(L) && first(L) == last(L)) {
             first(L) = NULL;
