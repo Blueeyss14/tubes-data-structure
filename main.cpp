@@ -103,9 +103,6 @@ int main() {
             cout << "Pilihan tidak valid!" << endl;
         }
         
-        cout << endl;
-        system("pause");
-        system("cls");
     }
     
     return 0;
