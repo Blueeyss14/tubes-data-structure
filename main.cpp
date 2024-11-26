@@ -85,7 +85,7 @@ int main() {
         }
         else if (pilihan == 6) {
             int min_harga, max_harga;
-            cout << "Masukkan range harga:" << endl;
+            cout << "Masukkan harga:" << endl;
             cout << "Minimal: ";
             cin >> min_harga;
             cout << "Maksimal: ";
@@ -97,7 +97,7 @@ int main() {
             cout << "Total Pendapatan: Rp" << total << endl;
         }
         else if (pilihan == 0) {
-            cout << "Terima kasih telah menggunakan sistem ini!" << endl;
+            cout << "Terima kasih Semoga Harimu Menyenangkan!" << endl;
         }
         else {
             cout << "Pilihan tidak valid!" << endl;
