@@ -46,7 +46,7 @@ int main() {
             cout << "Data berhasil ditambahkan!" << endl;
         } 
         else if (pilihan == 2) {
-            if (first(L) == NULL) {
+            if (list_first(L) == NULL) {
                 cout << "Data kosong!" << endl;
             } else {
                 cout << "\nData Kendaraan Terental:" << endl;
@@ -61,11 +61,11 @@ int main() {
             address P = findData(L, merk);
             if (P != NULL) {
                 cout << "Kendaraan ditemukan!" << endl;
-                cout << "Nama Penyewa: " << info(P).nama << endl;
-                cout << "Merk: " << info(P).merk << endl;
-                cout << "Waktu Pinjam: " << info(P).waktu_pinjam << endl;
-                cout << "Waktu Pengembalian: " << info(P).waktu_pengembalian << endl;
-                cout << "Harga: Rp" << info(P).harga << endl;
+                cout << "Nama Penyewa: " << list_info(P).nama << endl;
+                cout << "Merk: " << list_info(P).merk << endl;
+                cout << "Waktu Pinjam: " << list_info(P).waktu_pinjam << endl;
+                cout << "Waktu Pengembalian: " << list_info(P).waktu_pengembalian << endl;
+                cout << "Harga: Rp" << list_info(P).harga << endl;
             } else {
                 cout << "Kendaraan tidak ditemukan!" << endl;
             }
@@ -85,7 +85,7 @@ int main() {
         }
         else if (pilihan == 6) {
             int min_harga, max_harga;
-            cout << "Masukkan harga:" << endl;
+            cout << "Masukkan range harga:" << endl;
             cout << "Minimal: ";
             cin >> min_harga;
             cout << "Maksimal: ";
@@ -97,12 +97,13 @@ int main() {
             cout << "Total Pendapatan: Rp" << total << endl;
         }
         else if (pilihan == 0) {
-            cout << "Terima kasih Semoga Harimu Menyenangkan!" << endl;
+            cout << "Terima kasih telah menggunakan aplikasi ini!" << endl;
         }
         else {
             cout << "Pilihan tidak valid!" << endl;
         }
         
+        cout << endl;
     }
     
     return 0;
