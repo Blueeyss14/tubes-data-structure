@@ -1,126 +1,123 @@
 #include "rental_kendaraan.h"
 
-void createList(list &L) {
-    list_first(L) = NULL;
-    list_last(L) = NULL;
+void createList(List &L) {
+    FIRST(L) = NULL;
+    LAST(L) = NULL;
 }
 
 address createElement(infotype data) {
     address P = new elmlist;
-    list_info(P) = data;
-    list_next(P) = NULL;
-    list_prev(P) = NULL;
+    INFO(P) = data;
+    NEXT(P) = NULL;
+    PREV(P) = NULL;
     return P;
 }
 
-void insertFirst(list &L, address P) {
-    if (list_first(L) == NULL) {
-        list_first(L) = P;
-        list_last(L) = P;
+void insertFirst(List &L, address P) {
+    if (FIRST(L) == NULL) {
+        FIRST(L) = P;
+        LAST(L) = P;
     } else {
-        list_next(P) = list_first(L);
-        list_prev(list_first(L)) = P;
-        list_first(L) = P;
+        NEXT(P) = FIRST(L);
+        PREV(FIRST(L)) = P;
+        FIRST(L) = P;
     }
 }
 
-void insertLast(list &L, address P) {
-    if (list_first(L) == NULL) {
-        list_first(L) = P;
-        list_last(L) = P;
+void insertLast(List &L, address P) {
+    if (FIRST(L) == NULL) {
+        FIRST(L) = P;
+        LAST(L) = P;
     } else {
-        list_next(list_last(L)) = P;
-        list_prev(P) = list_last(L);
-        list_last(L) = P;
+        NEXT(LAST(L)) = P;
+        PREV(P) = LAST(L);
+        LAST(L) = P;
     }
 }
 
-void insertAfter(list &L, address Q, address P) {
+void insertAfter(List &L, address Q, address P) {
     if (Q != NULL) {
-        list_next(P) = list_next(Q);
-        list_prev(P) = Q;
+        NEXT(P) = NEXT(Q);
+        PREV(P) = Q;
         
-        if (list_next(Q) != NULL) {
-            list_prev(list_next(Q)) = P;
+        if (NEXT(Q) != NULL) {
+            PREV(NEXT(Q)) = P;
         } else {
-            list_last(L) = P;
+            LAST(L) = P;
         }
-        list_next(Q) = P;
+        NEXT(Q) = P;
     }
 }
 
-void deleteFirst(list &L) {
-    if (list_first(L) != NULL) {
-        address P = list_first(L);
-        if (list_first(L) == list_last(L)) {
-            list_first(L) = NULL;
-            list_last(L) = NULL;
+void deleteFirst(List &L) {
+    if (FIRST(L) != NULL) {
+        address P = FIRST(L);
+        if (FIRST(L) == LAST(L)) {
+            FIRST(L) = NULL;
+            LAST(L) = NULL;
         } else {
-            list_first(L) = list_next(P);
-            list_prev(list_first(L)) = NULL;
-            list_next(P) = NULL;
+            FIRST(L) = NEXT(P);
+            PREV(NEXT(P)) = NULL;
+            NEXT(P) = NULL;
         }
-        delete P;
     }
 }
 
-void deleteLast(list &L) {
-    if (list_first(L) != NULL) {
-        address P = list_last(L);
-        if (list_first(L) == list_last(L)) {
-            list_first(L) = NULL;
-            list_last(L) = NULL;
+void deleteLast(List &L) {
+    if (FIRST(L) != NULL) {
+        address P = LAST(L);
+        if (FIRST(L) == LAST(L)) {
+            FIRST(L) = NULL;
+            LAST(L) = NULL;
         } else {
-            list_last(L) = list_prev(P);
-            list_next(list_last(L)) = NULL;
-            list_prev(P) = NULL;
+            LAST(L) = PREV(P);
+            NEXT(LAST(L)) = NULL;
+            PREV(P) = NULL;
         }
-        delete P;
     }
 }
 
-void deleteAfter(list &L, address Q) {
-    if (Q != NULL && list_next(Q) != NULL) {
-        address P = list_next(Q);
+void deleteAfter(List &L, address Q) {
+    if (Q != NULL && NEXT(Q) != NULL) {
+        address P = NEXT(Q);
         
-        if (list_next(P) != NULL) {
-            list_next(Q) = list_next(P);
-            list_prev(list_next(P)) = Q;
+        if (NEXT(P) != NULL) {
+            NEXT(Q) = NEXT(P);
+            PREV(NEXT(P)) = Q;
         } else {
-            list_next(Q) = NULL;
-            list_last(L) = Q;
+            NEXT(Q) = NULL;
+            LAST(L) = Q;
         }
         
-        list_next(P) = NULL;
-        list_prev(P) = NULL;
-        delete P;
+        NEXT(P) = NULL;
+        PREV(P) = NULL;
     }
 }
 
-address findData(list &L, string merkKendaraan) {
-    address P = list_first(L);
+address findData(List &L, string merkKendaraan) {
+    address P = FIRST(L);
     while (P != NULL) {
-        if (list_info(P).merk == merkKendaraan) {
+        if (INFO(P).merk == merkKendaraan) {
             return P;
         }
-        P = list_next(P);
+        P = NEXT(P);
     }
     return NULL;
 }
 
-void deleteData(list &L, string data) {
+void deleteData(List &L, string data) {
     address P = findData(L, data);
     if (P != NULL) {
-        if (P == list_first(L) && list_first(L) == list_last(L)) {
-            list_first(L) = NULL;
-            list_last(L) = NULL;
+        if (P == FIRST(L) && FIRST(L) == LAST(L)) {
+            FIRST(L) = NULL;
+            LAST(L) = NULL;
             delete P;
-        } else if (P == list_first(L)) {
+        } else if (P == FIRST(L)) {
             deleteFirst(L);
-        } else if (P == list_last(L)) {
+        } else if (P == LAST(L)) {
             deleteLast(L);
         } else {
-            deleteAfter(L, list_prev(P));
+            deleteAfter(L, PREV(P));
         }
         cout << "Data berhasil dihapus!" << endl;
     } else {
@@ -128,83 +125,135 @@ void deleteData(list &L, string data) {
     }
 }
 
-void sortKendaraan(list &L, string kriteria) {
+void sortKendaraan(List &L, string kriteria) {
     address P, Q;
     infotype temp;
     
-    P = list_first(L);
+    P = FIRST(L);
     while (P != NULL) {
-        Q = list_next(P);
+        Q = NEXT(P);
         while (Q != NULL) {
             if (kriteria == "nama") {
-                if (list_info(P).nama > list_info(Q).nama) {
-                    temp = list_info(P);
-                    list_info(P) = list_info(Q);
-                    list_info(Q) = temp;
+                if (INFO(P).nama > INFO(Q).nama) {
+                    temp = INFO(P);
+                    INFO(P) = INFO(Q);
+                    INFO(Q) = temp;
                 }
             } else if (kriteria == "harga") {
-                if (list_info(P).harga > list_info(Q).harga) {
-                    temp = list_info(P);
-                    list_info(P) = list_info(Q);
-                    list_info(Q) = temp;
+                if (INFO(P).harga > INFO(Q).harga) {
+                    temp = INFO(P);
+                    INFO(P) = INFO(Q);
+                    INFO(Q) = temp;
                 }
             }
-            Q = list_next(Q);
+            Q = NEXT(Q);
         }
-        P = list_next(P);
+        P = NEXT(P);
     }
 }
 
-int hitungTotalPendapatan(list L) {
+int hitungTotalPendapatan(List L) {
     int total = 0;
-    address P = list_first(L);
+    address P = FIRST(L);
     while (P != NULL) {
-        total += list_info(P).harga;
-        P = list_next(P);
+        total += INFO(P).harga;
+        P = NEXT(P);
     }
     return total;
 }
 
-void showKendaraanTerental(list L) {
-    address P = list_first(L);
+void showKendaraanTerental(List L) {
+    address P = FIRST(L);
     int i = 1;
     while (P != NULL) {
-        cout << i << ". Nama Penyewa: " << list_info(P).nama << endl;
-        cout << "   Merk Kendaraan: " << list_info(P).merk << endl;
-        cout << "   Waktu Pinjam: " << list_info(P).waktu_pinjam << endl;
-        cout << "   Waktu Pengembalian: " << list_info(P).waktu_pengembalian << endl;
-        cout << "   Harga: Rp" << list_info(P).harga << endl;
+        cout << i << ". Nama Penyewa: " << INFO(P).nama << endl;
+        cout << "   Merk Kendaraan: " << INFO(P).merk << endl;
+        cout << "   Waktu Pinjam: " << INFO(P).waktu_pinjam << endl;
+        cout << "   Waktu Pengembalian: " << INFO(P).waktu_pengembalian << endl;
+        cout << "   Harga: Rp" << INFO(P).harga << endl;
         cout << "------------------------" << endl;
-        P = list_next(P);
+        P = NEXT(P);
         i++;
     }
 }
 
-void cariKendaraanByHarga(list L, int min_harga, int max_harga) {
-    address P = list_first(L);
+void cariKendaraanByHarga(List L, int min_harga, int max_harga) {
+    address P = FIRST(L);
     bool found = false;
     while (P != NULL) {
-        if (list_info(P).harga >= min_harga && list_info(P).harga <= max_harga) {
-            cout << "Merk: " << list_info(P).merk << endl;
-            cout << "Harga: Rp" << list_info(P).harga << endl;
+        if (INFO(P).harga >= min_harga && INFO(P).harga <= max_harga) {
+            cout << "Merk: " << INFO(P).merk << endl;
+            cout << "Harga: Rp" << INFO(P).harga << endl;
             cout << "------------------------" << endl;
             found = true;
         }
-        P = list_next(P);
+        P = NEXT(P);
     }
     if (!found) {
         cout << "Tidak ada kendaraan dalam range harga tersebut" << endl;
     }
 }
 
-bool kendaraanTersedia(list L, string merk) {
-    address P = list_first(L);
+bool kendaraanTersedia(List L, string merk) {
+    address P = FIRST(L);
     while (P != NULL) {
-        if (list_info(P).merk == merk) {
+        if (INFO(P).merk == merk) {
             return true;
         }
-        P = list_next(P);
+        P = NEXT(P);
     }
     return false;
 }
 
+void urutHargaTerendah(List &L, address P) {
+    address Q;
+    infotype temp;
+
+    if (FIRST(L) == NULL) {
+        cout << "Data kosong!" << endl;
+        return;
+    }
+    
+    P = FIRST(L);
+
+    
+    while (P != NULL) {
+        Q = NEXT(P);
+        while (Q != NULL) {
+            if (INFO(P).harga > INFO(Q).harga) {
+                temp = INFO(P);
+                INFO(P) = INFO(Q);
+                INFO(Q) = temp;
+            }
+            Q = NEXT(Q);
+        }
+        P = NEXT(P);
+    }
+    cout << "Data berhasil diurutkan dari harga terendah!" << endl;
+    showKendaraanTerental(L);
+}
+
+void urutHargaTertinggi(List &L, address P) {
+    address Q;
+    infotype temp;
+    if (FIRST(L) == NULL) {
+        cout << "Data kosong!" << endl;
+        return;
+    }
+    
+    P = FIRST(L);
+    while (P != NULL) {
+        Q = NEXT(P);
+        while (Q != NULL) {
+            if (INFO(P).harga < INFO(Q).harga) {
+                temp = INFO(P);
+                INFO(P) = INFO(Q);
+                INFO(Q) = temp;
+            }
+            Q = NEXT(Q);
+        }
+        P = NEXT(P);
+    }
+    cout << "Data berhasil diurutkan dari harga tertinggi!" << endl;
+    showKendaraanTerental(L);
+}

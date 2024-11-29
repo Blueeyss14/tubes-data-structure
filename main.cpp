@@ -15,12 +15,39 @@ void menuUtama() {
     cout << "5. Urutkan Data" << endl;
     cout << "6. Cari Berdasarkan Range Harga" << endl;
     cout << "7. Hitung Total Pendapatan" << endl;
+    cout << "8. Urutkan Data Harga" << endl;
     cout << "0. Keluar" << endl;
     cout << "Pilihan: ";
 }
 
+
+void urutDataHarga(List &L) {
+    string kriteria;
+    int pilihan;
+    address P;
+    cout << "1. Urutkan dari harga Terendah" << endl;
+    cout << "2. Urutkan dari harga Tertinggi" << endl;
+    cout << "3. Urutkan dari Nama/Harga" << endl;
+    cout << "Pilihan: ";
+    cin >> pilihan;
+
+    if (pilihan == 1) {
+        urutHargaTerendah(L, P);
+    }
+    else if (pilihan == 2) {
+        urutHargaTertinggi(L, P);
+    }
+    else if (pilihan == 3) {
+        cout << "Urutkan berdasarkan (nama/harga): ";
+        cin >> kriteria;
+        sortKendaraan(L, kriteria);
+        cout << "Data berhasil diurutkan!" << endl;
+    }
+}
+
+
 int main() {
-    list L;
+    List L;
     createList(L);
     int pilihan = -1;
     
@@ -46,7 +73,7 @@ int main() {
             cout << "Data berhasil ditambahkan!" << endl;
         } 
         else if (pilihan == 2) {
-            if (list_first(L) == NULL) {
+            if (FIRST(L) == NULL) {
                 cout << "Data kosong!" << endl;
             } else {
                 cout << "\nData Kendaraan Terental:" << endl;
@@ -61,11 +88,11 @@ int main() {
             address P = findData(L, merk);
             if (P != NULL) {
                 cout << "Kendaraan ditemukan!" << endl;
-                cout << "Nama Penyewa: " << list_info(P).nama << endl;
-                cout << "Merk: " << list_info(P).merk << endl;
-                cout << "Waktu Pinjam: " << list_info(P).waktu_pinjam << endl;
-                cout << "Waktu Pengembalian: " << list_info(P).waktu_pengembalian << endl;
-                cout << "Harga: Rp" << list_info(P).harga << endl;
+                cout << "Nama Penyewa: " << INFO(P).nama << endl;
+                cout << "Merk: " << INFO(P).merk << endl;
+                cout << "Waktu Pinjam: " << INFO(P).waktu_pinjam << endl;
+                cout << "Waktu Pengembalian: " << INFO(P).waktu_pengembalian << endl;
+                cout << "Harga: Rp" << INFO(P).harga << endl;
             } else {
                 cout << "Kendaraan tidak ditemukan!" << endl;
             }
@@ -77,11 +104,7 @@ int main() {
             deleteData(L, merk);
         }
         else if (pilihan == 5) {
-            string kriteria;
-            cout << "Urutkan berdasarkan (nama/harga): ";
-            cin >> kriteria;
-            sortKendaraan(L, kriteria);
-            cout << "Data berhasil diurutkan!" << endl;
+            urutDataHarga(L);
         }
         else if (pilihan == 6) {
             int min_harga, max_harga;
@@ -105,6 +128,5 @@ int main() {
         
         cout << endl;
     }
-    
     return 0;
 }

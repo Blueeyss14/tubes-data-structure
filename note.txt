@@ -1,0 +1,4 @@
+coming soon:
+- edit data
+- hitung total pendapatan
+- charge kalau sudah melebihi batas waktu
