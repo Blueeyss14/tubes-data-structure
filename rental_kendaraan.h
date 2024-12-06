@@ -82,4 +82,7 @@ void createListKendaraan(ListKendaraan &LK);
 void createRelationList(ListRelation &LR);
 adrRental createElmnRental(infotypeRental R);
 
+void insertElementParent_Rental(ListRental &LR, adrRental P);
+void insertElementChild_Kendaraan(ListKendaraan &LK, adrKendaraan P, infotypeKendaraan newKendaraan);
+void insertElementRelation_Relation(ListRelation &LR, adrRelation P);
 #endif
