@@ -1,54 +1,85 @@
 #ifndef RENTAL_KENDARAAN_H_INCLUDED
 #define RENTAL_KENDARAAN_H_INCLUDED
 
-#define FIRST(L) L.first
-#define LAST(L) L.last
-#define NEXT(P) P->next
-#define PREV(P) P->prev
-#define INFO(P) P->info
-
 #include <iostream>
 #include <string>
 using namespace std;
 
-struct rentalKendaraan {
-    string nama;
-    string merk, waktu_pinjam, waktu_pengembalian;
+#define First(p) p.First
+#define Info(p) (p)->info
+#define Next(p) (p)->Next
+#define Prev(p) p->Prev
+
+
+#define Peminjaman(p) (p)->peminjaman
+
+#define FirstParent(p) p.First
+#define InfoParent(p) p->info
+#define NextParent(p) p->Next
+
+#define FirstChild(L) L.First
+#define InfoChild(p) p->info
+#define LastChild(L) L.Last
+#define NextChild(p) p->Next
+#define PrevChild(p) p->Prev
+
+#define FirstRelation(L) L.First
+#define InfoRelation(p) p->info
+#define LastRelation(L) L.Last
+#define NextRelation(p) p->Next
+#define PrevRelation(p) p->Prev
+
+
+struct rental {
+    string namaPeminjam;
+    int lamaPeminjaman;
+    bool isTersedia;
+};
+
+struct kendaraan {
+    string nama, type;
     int harga;
 };
 
-typedef rentalKendaraan infotype;
-typedef struct elmlist *address;
+typedef rental infotypeRental;
+typedef kendaraan infotypeKendaraan;
 
-struct elmlist {
-    infotype info;
-    address next;
-    address prev;
+typedef struct elmRental *adrRental;
+typedef struct elmKendaraan *adrKendaraan;
+typedef struct elmRelation *adrRelation;
+
+struct elmRental {
+    infotypeRental info;
+    adrRental Next;
+    adrRelation peminjaman;
 };
 
-struct List {
-    address first;
-    address last;
+struct elmKendaraan {
+    infotypeKendaraan info;
+    adrKendaraan Prev;
+    adrKendaraan Next;
 };
 
+struct elmRelation {
+    adrRelation Next;
+    adrKendaraan kendaraan;
+};
 
+struct ListRental {
+    adrRental First;
+};
 
-void createList(List &L);
-address createElement(infotype data);
-void insertFirst(List &L, address P);
-void insertLast(List &L, address P);
-void insertAfter(List &L, address Q, address P);
-void deleteFirst(List &L);
-void deleteLast(List &L);
-void deleteAfter(List &L, address Q);
-address findData(List &L, string merkKendaraan);
-void deleteData(List &L, string data);
-void sortKendaraan(List &L, string kriteria);
-int hitungTotalPendapatan(List L);
-void showKendaraanTerental(List L);
-void cariKendaraanByHarga(List L, int min_harga, int max_harga);
-bool kendaraanTersedia(List L, string merk);
-void urutHargaTerendah(List &L, address P);
-void urutHargaTertinggi(List &L, address P);
+struct ListKendaraan {
+    adrKendaraan First;
+};
 
-#endif 
+struct ListRelation {
+    adrRelation First;
+};
+
+void createListRental(ListRental &LR);
+void createListKendaraan(ListKendaraan &LK);
+void createRelationList(ListRelation &LR);
+adrRental createElmnRental(infotypeRental R);
+
+#endif
