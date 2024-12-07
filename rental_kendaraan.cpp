@@ -1,80 +1,70 @@
 #include "rental_kendaraan.h"
 
 void createListRental(ListRental &LR) {
-    First(LR) = NULL;
+    FirstParent(LR) = NULL;
 }
 
 void createListKendaraan(ListKendaraan &LK) {
-    First(LK) = NULL;
+    FirstChild(LK) = NULL;
 }
 
 void createRelationList(ListRelation &LR) {
-    First(LR) = NULL;
+    FirstRelation(LR) = NULL;
 }
-
+//parent -> DLL
 adrRental createElmnRental(infotypeRental R) {
     adrRental P = new elmRental;
-    Info(P) = R;
-    Next(P) = NULL;
-    Peminjaman(P) = NULL;
+    InfoParent(P) = R;
+    NextParent(P) = NULL;
+    PrevParent(P) = NULL;
     return P;
 }
-
+//child -> SLL
 adrKendaraan createElmnKendaraan(infotypeKendaraan K) {
     adrKendaraan P = new elmKendaraan;
-    Info(P) = K;
-    Next(P) = NULL;
-    Prev(P) = NULL;
+    InfoChild(P) = K;
+    NextChild(P) = NULL;
     return P;
 }
-adrRelation createElmnRelation(adrKendaraan K) {
+//relation -> MLL
+adrRelation createElmnRelation(adrRental R, adrKendaraan K) {
     adrRelation P = new elmRelation;
-    P->kendaraan = K;
-    Next(P) = NULL;
+    NextRelation(P) = NULL;
+    RentalRelation(P) = R;
+    KendaraanRelation(P) = K;
     return P;
 }
 
-void insertElementParent_Rental(ListRental &LR, adrRental P) {
+
+void insertFirstParent_Rental(ListRental &LR, adrRental P) {
     if (FirstParent(LR) == NULL) {
         FirstParent(LR) = P;
+        LastParent(LR) = P;
+        NextParent(P) = NULL;
+        PrevParent(P) = NULL;
     } else {
-        adrRental Q = FirstParent(LR);
-        while (NextParent(Q) != NULL) {
-            Q = NextParent(Q);
-        }
-        NextParent(Q) = P;
+        NextParent(P) = FirstParent(LR);
+        PrevParent(FirstParent(LR)) = P;
+        FirstParent(LR) = P; 
     }
 }
 
-void insertElementChild_Kendaraan(ListKendaraan &LK, adrKendaraan P, infotypeKendaraan newKendaraan) {
+void insertFirstChild_Kendaraan(ListKendaraan &LK, adrKendaraan P) {
     if (FirstChild(LK) == NULL) {
-        createListKendaraan(LK);
         FirstChild(LK) = P;
-        InfoChild(P) = newKendaraan;
     } else {
-        adrKendaraan x = FirstChild(LK);
-        while (NextChild(x) != NULL) {
-            x = NextChild(x);
-        }
-        adrKendaraan newElm = createElmnKendaraan(newKendaraan);
-        NextChild(x) = newElm;
-        PrevChild(newElm) = x;
-        cout << "Elemen baru berhasil ditambahkan ke List Kendaraan" << endl;
+        NextChild(P) = FirstChild(LK);
+        FirstChild(LK) = P;
     }
 }
 
-
-void insertElementRelation_Relation(ListRelation &LR, adrRelation P) {
+void insertFirstRelation_Relation(ListRelation &LR, adrRental P, adrKendaraan K) {
+    adrRelation R = createElmnRelation(P, K);
     if (FirstRelation(LR) == NULL) {
-        FirstRelation(LR) = P;
-        NextRelation(P) = NULL;
+        FirstRelation(LR) = R;
+        LastRelation(LR) = R;
     } else {
-        adrRelation currentRelation = FirstRelation(LR);
-        while (NextRelation(currentRelation) != NULL) {
-            currentRelation = NextRelation(currentRelation);
-        }
-        NextRelation(currentRelation) = P;
-        NextRelation(P) = NULL;
+        NextRelation(R) = FirstRelation(LR);
+        FirstRelation(LR) = R;
     }
-    cout << "Relation berhasil ditambahkan ke List Relation" << endl;
 }
