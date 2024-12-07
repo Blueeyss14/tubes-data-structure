@@ -5,7 +5,6 @@
 #include <string>
 using namespace std;
 
-
 #define Peminjaman(p) (p)->peminjaman
 
 //DLL
@@ -29,7 +28,6 @@ using namespace std;
 #define PrevRelation(p) p->Prev
 #define RentalRelation(p) p->Rental
 #define KendaraanRelation(p) p->Kendaraan
-
 
 
 struct rental {

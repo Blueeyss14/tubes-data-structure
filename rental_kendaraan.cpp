@@ -1,5 +1,4 @@
 #include "rental_kendaraan.h"
-
 void createListRental(ListRental &LR) {
     FirstParent(LR) = NULL;
 }
