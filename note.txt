@@ -7,91 +7,16 @@ coming soon:
 -------------------------------------
 unpresentBACKUP
 
-void insertElementParent_Kendaraan(ListKendaraan &LK, adrKendaraan P) {
-    if (FirstParent(LK) == NULL) {
-        FirstParent(LK) = P;
-    } else {
-        adrKendaraan Q = FirstParent(LK);
-        while (NextParent(Q) != NULL) {
-            Q = NextParent(Q);
-        }
-        NextParent(Q) = P;
-        Prev(Q) = Q;
-    }
-}
-
-void insertElementParent_Relation(ListRelation &LR, adrRelation P) {
-    if (FirstParent(LR) == NULL) {
-        FirstParent(LR) = P;
-    } else {
-        adrRelation Q = FirstParent(LR);
-        while (NextParent(Q) != NULL) {
-            Q = NextParent(Q);
-        }
-        NextParent(Q) = P;
-    }
-}
-
-void insertElementChild_Rental(ListRental &LR, adrRental P, infotypeRental newRental) {
-    if (FirstChild(LR) == NULL) {
-        createListRental(LR);
-        FirstChild(LR) = P;
-        Info(P) = newRental;
-    } else {
-        adrRental x = FirstChild(LR);
-        while (NextChild(x) != NULL) {
-            x = NextChild(x);
-        }
-        NextChild(x) = createElmnRental(newRental);
-        cout << "Elemen baru berhasil ditambahkan ke List Rental" << endl;
-    }
-}
-
-
-void insertElementChild_Relation(ListRelation &LR, adrRelation P, adrKendaraan K) {
-    if (FirstChild(LR) == NULL) {
-        createRelationList(LR);
-        FirstChild(LR) = P;
-        P->kendaraan = K;
-    } else {
-        adrRelation currentRelation = FirstChild(LR);
-        while (NextChild(currentRelation) != NULL) {
-            currentRelation = NextChild(currentRelation);
-        }
-        adrRelation newElm = createElmnRelation(K);
-        NextChild(currentRelation) = newElm;
-        cout << "Relation baru berhasil ditambahkan ke List Relation" << endl;
-    }
-}
-
-void insertElementRelation_Rental(ListRental &LR, adrRental P) {
-    if (FirstRelation(LR) == NULL) {
-        FirstRelation(LR) = P;
-        NextRelation(P) = NULL;
-    } else {
-        adrRental currentRental = FirstRelation(LR);
-        while (NextRelation(currentRental) != NULL) {
-            currentRental = NextRelation(currentRental);
-        }
-        NextRelation(currentRental) = P;
-        NextRelation(P) = NULL;
-    }
-    cout << "Relation Rental berhasil ditambahkan.\n";
-}
-
-void insertElementRelation_Kendaraan(ListKendaraan &LK, adrKendaraan P) {
-    if (FirstRelation(LK) == NULL) {
-        FirstRelation(LK) = P;
-        PrevRelation(P) = NULL;
-        NextRelation(P) = NULL;
-    } else {
-        adrKendaraan currentKendaraan = FirstRelation(LK);
-        while (NextRelation(currentKendaraan) != NULL) {
-            currentKendaraan = NextRelation(currentKendaraan);
-        }
-        NextRelation(currentKendaraan) = P;
-        PrevRelation(P) = currentKendaraan;
-        NextRelation(P) = NULL;
-    }
-    cout << "Relation Kendaraan berhasil ditambahkan.\n";
+void menuUtama() {
+    cout << "=== APLIKASI RENTAL KENDARAAN ===" << endl;
+    cout << "1. Tambah Data Rental" << endl;
+    cout << "2. Tampilkan Semua Data" << endl;
+    cout << "3. Cari Kendaraan" << endl;
+    cout << "4. Hapus Data Rental" << endl;
+    cout << "5. Urutkan Data berdasa" << endl;
+    cout << "6. Cari Berdasarkan Range Harga" << endl;
+    cout << "7. Hitung Total Pendapatan" << endl;
+    cout << "8. Urutkan Data Harga" << endl;
+    cout << "0. Keluar" << endl;
+    cout << "Pilihan: ";
 }
