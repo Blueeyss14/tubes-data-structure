@@ -8,7 +8,7 @@ void menuUtama()
     cout << "1. Tambah Data Rental" << endl;
     cout << "2. Tampilkan Semua Data" << endl;
     cout << "3. Cari Kendaraan" << endl;
-    cout << "4. Delete Kendaraan" << endl;
+    cout << "4. Delete Data Rental Kendaraan" << endl;
     cout << "0. Keluar" << endl;
     cout << "Pilihan: ";
 }
@@ -77,6 +77,8 @@ int main()
             if (relasi != NULL)
             {
                 cout << "\n==========================================================" << endl;
+                cout << "Kendaraan Ditemukan" << endl;
+                cout << "==========================================================" << endl;
                 cout << "Peminjam: " << InfoParent(RentalRelation(relasi)).namaPeminjam << endl;
                 cout << "Lama Peminjaman: " << InfoParent(RentalRelation(relasi)).lamaPeminjaman << " jam" << endl;
                 cout << "Nama Kendaraan: " << InfoChild(KendaraanRelation(relasi)).merk << endl;
@@ -92,6 +94,7 @@ int main()
                 cout << "==========================================================" << endl;
             }
         } else if (pilihan == 4) {
+            
             
         } else if (pilihan == 0) {
             cout << "\n==========================================================" << endl;
