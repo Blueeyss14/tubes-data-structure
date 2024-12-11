@@ -140,22 +140,31 @@ void insertAfterRelation_Relation(ListRelation &LR, adrRelation Prec, adrRental 
     }
 }
 
-void deleteFirstParent_Rental(ListRental &LR, adrRental P) {
-    P = FirstParent(LR);
-    FirstParent(LR) = NULL;
-    PrevParent(FirstParent(LR)) = NULL;
+void deleteFirstParent_Rental(ListRental &LR, adrRental &P) {
+    if (FirstParent(LR) != NULL) {
+        P = FirstParent(LR);
+        if (NextParent(P) != NULL) {
+            FirstParent(LR) = NextParent(P);
+            PrevParent(FirstParent(LR)) = NULL;
+        } else {
+            FirstParent(LR) = NULL;
+            LastParent(LR) = NULL;
+        }
+        
+        NextParent(P) = NULL;
+        PrevParent(P) = NULL;
+    } else {
+        P = NULL;
+    }
 }
+
 
 void deleteFirstChild_Kendaraan(ListKendaraan &LK, adrKendaraan P) {
     if (FirstChild(LK) != NULL) {
-        if (NextChild(FirstChild(LK)) != NULL) {
-            P = FirstChild(LK);
-            FirstChild(LK) = NextChild(P);
-            NextChild(P) = NULL;
-        } else {
-            P = FirstChild(LK);
-            FirstChild(LK) = NULL;
-        }
+        P = FirstChild(LK);
+        FirstChild(LK) = NextChild(P);
+        
+        NextChild(P) = NULL;
     } else {
         P = NULL;
     }
@@ -166,12 +175,19 @@ void deleteFirstRelation_Relation(ListRelation &LR, adrRental &P, adrKendaraan &
         adrRelation R = FirstRelation(LR);
         P = RentalRelation(R);
         K = KendaraanRelation(R);
+        
         FirstRelation(LR) = NextRelation(R);
-
+        
         if (FirstRelation(LR) == NULL) {
             LastRelation(LR) = NULL;
         }
+        
         NextRelation(R) = NULL;
+        RentalRelation(R) = NULL;
+        KendaraanRelation(R) = NULL;
+    } else {
+        P = NULL;
+        K = NULL;
     }
 }
 
@@ -249,7 +265,7 @@ void deleteAfterChild_Kendaraan(ListKendaraan LK, adrKendaraan Prec, adrKendaraa
     }
 }
 
-void deleteAfterRelation_Rental(ListRelation &LR, adrRelation Prec, adrRental &P, adrKendaraan &K) {
+void deleteAfterRelation_Relation(ListRelation &LR, adrRelation Prec, adrRental P, adrKendaraan K) {
     if (NextRelation(Prec) != NULL) {
         adrRelation R = NextRelation(Prec);
         P = RentalRelation(R); 
@@ -259,10 +275,12 @@ void deleteAfterRelation_Rental(ListRelation &LR, adrRelation Prec, adrRental &P
             PrevRelation(NextRelation(R)) = Prec;
         } else {
             LastRelation(LR) = Prec;        
-            }
+        }
         NextRelation(R) = NULL;
     }
 }
+
+
 
 adrRental findParent_Rental(ListRental &LR, string nama) {
     adrRental P;
@@ -334,7 +352,7 @@ void showAllDataRelation_Relation(ListRelation LR) {
     if (FirstRelation(LR) != NULL) {
         P = FirstRelation(LR);
         while (P != NULL) {
-            cout << "\n==========================================================" << endl;
+            cout << "==========================================================" << endl;
             cout << "Peminjam: " << InfoParent(RentalRelation(P)).namaPeminjam << endl;
             cout << "Lama Peminjaman: " << InfoParent(RentalRelation(P)).lamaPeminjaman << endl;
 
@@ -459,7 +477,7 @@ int countElmnChild(ListKendaraan LK, ListRelation LR) {
         if (countRelationChild(LR, child) == 0) {
             count++;
         }
-        child = NextChild(child); // Lanjutkan ke child berikutnya
+        child = NextChild(child);
     }
     
     return count;
@@ -495,33 +513,4 @@ void editRelation(ListRelation &LR, ListKendaraan LK, adrRental parent, string n
     } else {
         cout << "Tidak ada relasi yang ditemukan untuk parent ini." << endl;
     }
-}
-
-void urutkanDataBerdasarkanHarga(ListKendaraan &LK) {
-    if (FirstChild(LK) == NULL) return;
-
-    adrKendaraan current = FirstChild(LK);
-    while (current != NULL) {
-        adrKendaraan next = NextChild(current);
-        while (next != NULL) {
-            if (InfoChild(current).harga > InfoChild(next).harga) {
-                kendaraan temp = InfoChild(current);
-                InfoChild(current) = InfoChild(next);
-                InfoChild(next) = temp;
-            }
-            next = NextChild(next);
-        }
-        current = NextChild(current);
-    }
-}
-
-adrKendaraan cariKendaraanBerdasarkanHarga(ListKendaraan &LK, int harga) {
-    adrKendaraan current = FirstChild(LK);
-    while (current != NULL) {
-        if (InfoChild(current).harga == harga) {
-            return current;
-        }
-        current = NextChild(current);
-    }
-    return NULL;
 }

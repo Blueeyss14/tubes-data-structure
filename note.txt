@@ -13,7 +13,7 @@ void menuUtama() {
     cout << "2. Tampilkan Semua Data" << endl;
     cout << "3. Cari Kendaraan" << endl;
     cout << "4. Hapus Data Rental" << endl;
-    cout << "5. Urutkan Data berdasa" << endl;
+    cout << "5. Urutkan Data Berdasarkan" << endl;
     cout << "6. Cari Berdasarkan Range Harga" << endl;
     cout << "7. Hitung Total Pendapatan" << endl;
     cout << "8. Urutkan Data Harga" << endl;

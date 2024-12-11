@@ -9,12 +9,14 @@ void menuUtama()
     cout << "2. Tampilkan Semua Data" << endl;
     cout << "3. Cari Kendaraan" << endl;
     cout << "4. Delete Data Rental Kendaraan" << endl;
+    cout << "5. Urutkan Data Berdasarkan Harga" << endl;
     cout << "0. Keluar" << endl;
     cout << "Pilihan: ";
 }
 
 int main()
 {
+    int index = 1;
     int pilihan = -1;
     ListRental LR;
     ListKendaraan LK;
@@ -85,7 +87,6 @@ int main()
                 cout << "Type: " << InfoChild(KendaraanRelation(relasi)).type << endl;
                 cout << "Harga: " << InfoChild(KendaraanRelation(relasi)).harga << endl;
                 cout << "==========================================================" << endl;
-
             }
             else
             {
@@ -93,10 +94,74 @@ int main()
                 cout << "Data tidak ditemukan." << endl;
                 cout << "==========================================================" << endl;
             }
-        } else if (pilihan == 4) {
-            
-            
-        } else if (pilihan == 0) {
+        }
+        else if (pilihan == 4)
+        {
+            string namaPeminjam;
+            string merkKendaraan;
+
+            cout << "Masukkan Nama Peminjam: ";
+            cin >> namaPeminjam;
+            cout << "Masukkan Merk Kendaraan: ";
+            cin >> merkKendaraan;
+
+            adrRental rental = findParent_Rental(LR, namaPeminjam);
+            adrKendaraan kendaraan = findChild_Kendaraan(LK, merkKendaraan);
+            adrRelation relasi = findRelation_Relation(LRelasi, rental, kendaraan);
+
+            if (relasi != NULL)
+            {
+                adrRental rentalhapus;
+                adrKendaraan kendaraanhapus;
+                deleteFirstRelation_Relation(LRelasi, rentalhapus, kendaraanhapus);
+
+                if (rental != NULL)
+                {
+                    deleteFirstParent_Rental(LR, rental);
+                }
+
+                if (kendaraan != NULL)
+                {
+                    deleteFirstChild_Kendaraan(LK, kendaraan);
+                }
+
+                cout << "Data Kendaraan Berhasil Dihapus" << endl;
+            }
+            else
+            {
+                cout << "Data tidak ditemukan." << endl;
+            }
+        }
+        else if (pilihan == 5)
+        {
+            urutkanDataBerdasarkanHarga(LK, LR, LRelasi);
+            adrRental dataRental = FirstParent(LR);
+            adrKendaraan dataKendaraan = FirstChild(LK);
+            if (dataRental == NULL && dataKendaraan == NULL)
+            {
+            cout << "\n==========================================================" << endl;
+                cout << "Tidak ada data kendaraan yang tersedia." << endl;
+            cout << "==========================================================" << endl;
+            }
+            else {
+            cout << "\n==========================================================" << endl;
+                cout << "Data Berhasil diurutkan" << endl;
+                while (dataRental != NULL && dataKendaraan != NULL) {
+                    cout << index++ << endl;
+                    cout << "==========================================================" << endl;
+                    cout << "Nama " << InfoParent(dataRental).namaPeminjam << endl;
+                    cout << "Merk: " << InfoParent(dataRental).lamaPeminjaman << endl;
+                    cout << "Merk: " << InfoChild(dataKendaraan).merk << endl;
+                    cout << "Tipe: " << InfoChild(dataKendaraan).type << endl;
+                    cout << "Harga: " << InfoChild(dataKendaraan).harga << endl;
+                    dataRental = NextParent(dataRental);
+                    dataKendaraan = NextChild(dataKendaraan);
+            cout << "==========================================================\n" << endl;
+                }
+            }
+        }
+        else if (pilihan == 0)
+        {
             cout << "\n==========================================================" << endl;
             cout << "Terimakasih Telah Mengunjungi Aplikasi Rental Kendaraan ini" << endl;
             cout << "==========================================================" << endl;
@@ -106,7 +171,6 @@ int main()
             cout << "\n==========================================================" << endl;
             cout << "Pilihan tidak valid, silakan masukkan ulang" << endl;
             cout << "==========================================================" << endl;
-
         }
     }
     return 0;
