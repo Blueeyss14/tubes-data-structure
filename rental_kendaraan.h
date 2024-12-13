@@ -31,7 +31,7 @@ using namespace std;
 
 
 struct rental {
-    string namaPeminjam;
+    string namaPemilk;
     int lamaPeminjaman;
 };
 
@@ -59,6 +59,8 @@ struct elmKendaraan {
 };
 
 struct elmRelation {
+    infotypeRental infoRental;
+    infotypeKendaraan infoKendaraan;
     adrRelation Next;
     adrRelation Prev;
     adrRental Rental;
@@ -118,4 +120,5 @@ int countRelationChild(ListRelation LR, adrKendaraan child);
 int countElmnChild(ListKendaraan LK, ListRelation LR);
 void editRelation(ListRelation &LR, ListKendaraan LK, adrRental parent, string namaChildBaru);
 void urutkanDataBerdasarkanHarga(ListKendaraan &LK, ListRental &LR, ListRelation &LRelasi);
+void dataDummy(ListRelation &LR, ListRental &LRental, ListKendaraan &LKendaraan);
 #endif

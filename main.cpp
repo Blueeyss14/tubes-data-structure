@@ -16,7 +16,7 @@ void menuUtama()
 
 int main()
 {
-    int index = 1;
+    int index = 0;
     int pilihan = -1;
     ListRental LR;
     ListKendaraan LK;
@@ -36,8 +36,8 @@ int main()
         if (pilihan == 1)
         {
             infotypeRental rental;
-            cout << "Nama Peminjam: ";
-            cin >> rental.namaPeminjam;
+            cout << "Nama Pemilik Kendaraan: ";
+            cin >> rental.namaPemilk;
             cout << "Lama Pinjam (Jam): ";
             cin >> rental.lamaPeminjaman;
 
@@ -46,7 +46,7 @@ int main()
             cin >> kendaraan.merk;
             cout << "Type Kendaraan: ";
             cin >> kendaraan.type;
-            cout << "Harga Kendaraan: ";
+            cout << "Harga Rental: ";
             cin >> kendaraan.harga;
 
             adrRental newRental = createElmnRental(rental);
@@ -59,6 +59,7 @@ int main()
         }
         else if (pilihan == 2)
         {
+            dataDummy(LRelasi, LR, LK);
             showAllDataRelation_Relation(LRelasi);
         }
         else if (pilihan == 3)
@@ -66,7 +67,7 @@ int main()
             string namaPeminjam;
             string merkKendaraan;
 
-            cout << "Masukkan Nama Peminjam: ";
+            cout << "Masukkan Nama Pemilik: ";
             cin >> namaPeminjam;
             cout << "Masukkan Merk Kendaraan: ";
             cin >> merkKendaraan;
@@ -81,11 +82,11 @@ int main()
                 cout << "\n==========================================================" << endl;
                 cout << "Kendaraan Ditemukan" << endl;
                 cout << "==========================================================" << endl;
-                cout << "Peminjam: " << InfoParent(RentalRelation(relasi)).namaPeminjam << endl;
+                cout << "Pemilik: " << InfoParent(RentalRelation(relasi)).namaPemilk << endl;
                 cout << "Lama Peminjaman: " << InfoParent(RentalRelation(relasi)).lamaPeminjaman << " jam" << endl;
                 cout << "Nama Kendaraan: " << InfoChild(KendaraanRelation(relasi)).merk << endl;
                 cout << "Type: " << InfoChild(KendaraanRelation(relasi)).type << endl;
-                cout << "Harga: " << InfoChild(KendaraanRelation(relasi)).harga << endl;
+                cout << "Harga Rental: " << InfoChild(KendaraanRelation(relasi)).harga << endl;
                 cout << "==========================================================" << endl;
             }
             else
@@ -100,7 +101,7 @@ int main()
             string namaPeminjam;
             string merkKendaraan;
 
-            cout << "Masukkan Nama Peminjam: ";
+            cout << "Masukkan Nama Pemilik: ";
             cin >> namaPeminjam;
             cout << "Masukkan Merk Kendaraan: ";
             cin >> merkKendaraan;
@@ -124,12 +125,17 @@ int main()
                 {
                     deleteFirstChild_Kendaraan(LK, kendaraan);
                 }
-
+                cout << "==========================================================" << endl;
                 cout << "Data Kendaraan Berhasil Dihapus" << endl;
+                cout << "==========================================================" << endl;
+
             }
             else
             {
+                cout << "==========================================================" << endl;
                 cout << "Data tidak ditemukan." << endl;
+                cout << "==========================================================" << endl;
+
             }
         }
         else if (pilihan == 5)
@@ -147,10 +153,10 @@ int main()
             cout << "\n==========================================================" << endl;
                 cout << "Data Berhasil diurutkan" << endl;
                 while (dataRental != NULL && dataKendaraan != NULL) {
-                    cout << index++ << endl;
+                    // cout << index++ << endl;
                     cout << "==========================================================" << endl;
-                    cout << "Nama " << InfoParent(dataRental).namaPeminjam << endl;
-                    cout << "Merk: " << InfoParent(dataRental).lamaPeminjaman << endl;
+                    cout << "Pemilik Kendaraan: " << InfoParent(dataRental).namaPemilk << endl;
+                    cout << "Lama Peminjam: " << InfoParent(dataRental).lamaPeminjaman << endl;
                     cout << "Merk: " << InfoChild(dataKendaraan).merk << endl;
                     cout << "Tipe: " << InfoChild(dataKendaraan).type << endl;
                     cout << "Harga: " << InfoChild(dataKendaraan).harga << endl;

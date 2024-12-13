@@ -286,7 +286,7 @@ adrRental findParent_Rental(ListRental &LR, string nama) {
     adrRental P;
     P = FirstParent(LR);
     while (P!=NULL) {
-        if (InfoParent(P).namaPeminjam == nama) {
+        if (InfoParent(P).namaPemilk == nama) {
             return P;
         }
         P = NextParent(P);
@@ -324,7 +324,7 @@ void showAllDataParent_Rental(ListRental LR) {
         P = FirstParent(LR);
 
         while (P != NULL) {
-            cout << InfoParent(P).namaPeminjam << InfoParent(P).lamaPeminjaman << endl;
+            cout << InfoParent(P).namaPemilk << InfoParent(P).lamaPeminjaman << endl;
             P = NextParent(P);
         }
     } else {
@@ -353,7 +353,7 @@ void showAllDataRelation_Relation(ListRelation LR) {
         P = FirstRelation(LR);
         while (P != NULL) {
             cout << "==========================================================" << endl;
-            cout << "Peminjam: " << InfoParent(RentalRelation(P)).namaPeminjam << endl;
+            cout << "Peminjam: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
             cout << "Lama Peminjaman: " << InfoParent(RentalRelation(P)).lamaPeminjaman << endl;
 
             cout << "Merk: " << InfoChild(KendaraanRelation(P)).merk << endl;
@@ -402,7 +402,7 @@ void showDataParentChildRelation(ListRelation LR) {
     if (FirstRelation(LR) != NULL) {
         P = FirstRelation(LR);
         while (P != NULL) {
-            cout << "Peminjam: " << InfoParent(RentalRelation(P)).namaPeminjam << endl;
+            cout << "Peminjam: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
             cout << "Kendaraan: " << InfoChild(KendaraanRelation(P)).merk << endl;
             P = NextRelation(P);
         }
@@ -421,7 +421,7 @@ void showDataParentFromChild(ListRelation LR, ListKendaraan LK, string namaChild
 
         while (P != NULL) {
             if (KendaraanRelation(P) == child) {
-                cout << "Peminjam: " << InfoParent(RentalRelation(P)).namaPeminjam << endl;
+                cout << "Peminjam: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
                 found = true;
             }
             P = NextRelation(P);
