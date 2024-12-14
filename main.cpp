@@ -13,6 +13,8 @@ void menuUtama()
     cout << "6. Daftar Kendaraan Terpinjam" << endl;
     cout << "7. Total Pendapatan Rental" << endl;
     cout << "8. Hapus Data Rental" << endl;
+    cout << "9. Show setiap data parent tertentu" << endl;
+    cout << "10. Show setiap data child tertentu" << endl;
     cout << "0. Keluar" << endl;
     cout << "Pilihan: ";
 }
@@ -223,6 +225,7 @@ int main()
         else if (pilihan == 8)
         {
             string namaPeminjam, namaPemilik, merkKendaraan;
+
             cout << "Masukkan Nama Peminjam: ";
             cin >> namaPeminjam;
             cout << "Masukkan Nama Pemilik: ";
@@ -230,7 +233,24 @@ int main()
             cout << "Masukkan Merk Kendaraan: ";
             cin >> merkKendaraan;
 
-            deleteRentalData(LR, LK, LRelasi, namaPeminjam, namaPemilik, merkKendaraan);
+            deleteRentalData(LRelasi, LR, LK, namaPemilik, merkKendaraan, namaPeminjam);
+        }
+        else if (pilihan == 9)
+        {
+            string namaKendaraan;
+            cout << "Masukkan Nama Kendaraan (Parent): ";
+            cin >> namaKendaraan;
+
+            showDataParentFromChild(LRelasi, LK, namaKendaraan);
+        }
+
+        else if (pilihan == 10)
+        {
+            string namaChild;
+            cout << "Masukkan Nama Pemilik (Child): ";
+            cin >> namaChild;
+
+            showDataChildFromParent(LR, LRelasi, namaChild);
         }
 
         else if (pilihan == 0)

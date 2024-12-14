@@ -172,16 +172,16 @@ void deleteFirstChild_Kendaraan(ListKendaraan &LK, adrKendaraan P) {
 }
 
 
-void deleteFirstRelation_Relation(ListRelation &LR, adrRental &P, adrKendaraan &K) {
-    if (FirstRelation(LR) != NULL) {
-        adrRelation R = FirstRelation(LR);
+void deleteFirstRelation_Relation(ListRelation &LRelasi, adrRental &P, adrKendaraan &K) {
+    if (FirstRelation(LRelasi) != NULL) {
+        adrRelation R = FirstRelation(LRelasi);
         P = RentalRelation(R);
         K = KendaraanRelation(R);
         
-        FirstRelation(LR) = NextRelation(R);
+        FirstRelation(LRelasi) = NextRelation(R);
         
-        if (FirstRelation(LR) == NULL) {
-            LastRelation(LR) = NULL;
+        if (FirstRelation(LRelasi) == NULL) {
+            LastRelation(LRelasi) = NULL;
         }
         
         NextRelation(R) = NULL;
@@ -192,6 +192,7 @@ void deleteFirstRelation_Relation(ListRelation &LR, adrRental &P, adrKendaraan &
         K = NULL;
     }
 }
+
 
 
 void deleteLastParent_Rental(ListRental &LR, adrRental P) {
@@ -414,7 +415,7 @@ void showDataParentChildRelation(ListRelation LR) {
     if (FirstRelation(LR) != NULL) {
         P = FirstRelation(LR);
         while (P != NULL) {
-            cout << "Peminjam: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
+            cout << "Pemilik: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
             cout << "Kendaraan: " << InfoChild(KendaraanRelation(P)).merk << endl;
             P = NextRelation(P);
         }
@@ -433,7 +434,8 @@ void showDataParentFromChild(ListRelation LR, ListKendaraan LK, string namaChild
 
         while (P != NULL) {
             if (KendaraanRelation(P) == child) {
-                cout << "Peminjam: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
+                cout << "Pemilik: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
+                cout << "Lama Peminjaman: " << InfoParent(RentalRelation(P)).lamaPeminjaman << endl;
                 found = true;
             }
             P = NextRelation(P);

@@ -123,5 +123,5 @@ void editRelation(ListRelation &LR, ListKendaraan LK, adrRental parent, string n
 void urutkanDataBerdasarkanHarga(ListKendaraan &LK, ListRental &LR, ListRelation &LRelasi);
 void dataDummy(ListRelation &LR, ListRental &LRental, ListKendaraan &LKendaraan);
 int hitungTotalPendapatanRental(ListRelation LRelasi);
-void deleteRentalData(ListRental &LR, ListKendaraan &LK, ListRelation &LRelasi, string namaPeminjam, string namaPemilik, string merkKendaraan);
+void deleteRentalData(ListRelation &LRelasi, ListRental &LR, ListKendaraan &LKendaraan, string namaPemilik, string merkKendaraan, string namaPeminjam);
 #endif

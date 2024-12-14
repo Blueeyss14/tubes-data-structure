@@ -59,32 +59,18 @@ int hitungTotalPendapatanRental(ListRelation LRelasi)
     return totalPendapatan;
 }
 
-void deleteRentalData(ListRental &LR, ListKendaraan &LK, ListRelation &LRelasi, string namaPeminjam, string namaPemilik, string merkKendaraan)
-{
-    adrRental rental = FirstParent(LR);
-    adrKendaraan kendaraan = FirstChild(LK);
-    adrRelation relasi = FirstRelation(LRelasi);
+void deleteRentalData(ListRelation &LRelasi, ListRental &LR, ListKendaraan &LKendaraan, string namaPemilik, string merkKendaraan, string namaPeminjam) {
+    adrRental rental = findParent_Rental(LR, namaPemilik);
+    adrKendaraan kendaraan = findChild_Kendaraan(LKendaraan, merkKendaraan);
+    adrRelation relasi = findRelation_Relation(LRelasi, rental, kendaraan);
 
-    while (relasi != NULL)
-    {
-        if (InfoParent(relasi->Rental).namaPemilk == namaPemilik &&
-            InfoParent(relasi->Rental).namaPeminjam == namaPeminjam &&
-            InfoChild(relasi->Kendaraan).merk == merkKendaraan)
-        {
+    if (relasi != NULL && InfoParent(rental).namaPemilk == namaPemilik && InfoParent(rental).namaPeminjam == namaPeminjam) {
+        deleteFirstRelation_Relation(LRelasi, rental, kendaraan);
+        deleteFirstParent_Rental(LR, rental);
+        deleteFirstChild_Kendaraan(LKendaraan, kendaraan);
 
-            deleteLastRelation_Relation(LRelasi, rental, kendaraan);
-            cout << "Data relasi berhasil dihapus!" << endl;
-
-            deleteLastParent_Rental(LR, rental);
-            cout << "Data rental berhasil dihapus!" << endl;
-
-            deleteLastChild_Kendaraan(LK, kendaraan);
-            cout << "Data kendaraan berhasil dihapus!" << endl;
-
-            return;
-        }
-        relasi = NextRelation(relasi);
-
-        cout << "Data tidak ditemukan!" << endl;
+        cout << "Data Rental Berhasil Dihapus!" << endl;
+    } else {
+        cout << "Data tidak ditemukan atau kendaraan tidak dipinjam oleh peminjam yang dimaksud." << endl;
     }
 }
