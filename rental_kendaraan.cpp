@@ -150,13 +150,14 @@ void deleteFirstParent_Rental(ListRental &LR, adrRental &P) {
             FirstParent(LR) = NULL;
             LastParent(LR) = NULL;
         }
-        
+
         NextParent(P) = NULL;
         PrevParent(P) = NULL;
     } else {
         P = NULL;
     }
 }
+
 
 
 void deleteFirstChild_Kendaraan(ListKendaraan &LK, adrKendaraan P) {
@@ -169,6 +170,7 @@ void deleteFirstChild_Kendaraan(ListKendaraan &LK, adrKendaraan P) {
         P = NULL;
     }
 }
+
 
 void deleteFirstRelation_Relation(ListRelation &LR, adrRental &P, adrKendaraan &K) {
     if (FirstRelation(LR) != NULL) {
@@ -191,12 +193,19 @@ void deleteFirstRelation_Relation(ListRelation &LR, adrRental &P, adrKendaraan &
     }
 }
 
+
 void deleteLastParent_Rental(ListRental &LR, adrRental P) {
-    P = LastParent(LR);
-    LastParent(LR) = PrevParent(P);
-    NextParent(LastParent(LR)) = NULL;
-    PrevParent(P) = NULL;
+    if (LastParent(LR) != NULL) {
+        P = LastParent(LR);
+        LastParent(LR) = PrevParent(P);
+        if (LastParent(LR) != NULL) {
+            NextParent(LastParent(LR)) = NULL;
+        }
+        PrevParent(P) = NULL;
+        NextParent(P) = NULL;
+    }
 }
+
 
 void deleteLastChild_Kendaraan(ListKendaraan &LR, adrKendaraan P) {
     adrKendaraan x;
@@ -232,7 +241,7 @@ void deleteLastRelation_Relation(ListRelation &LR, adrRental &P, adrKendaraan &K
         P = RentalRelation(R);
         K = KendaraanRelation(R);
 
-        if (lastRel == FirstRelation(LR)) {
+        if (lastRel == NULL) {
             FirstRelation(LR) = NULL;
             LastRelation(LR) = NULL;
         } else {
@@ -240,8 +249,11 @@ void deleteLastRelation_Relation(ListRelation &LR, adrRental &P, adrKendaraan &K
             LastRelation(LR) = lastRel;
         }
         NextRelation(R) = NULL;
+        RentalRelation(R) = NULL;
+        KendaraanRelation(R) = NULL;
     }
 }
+
 
 void deleteAfterParent_Rental(ListRental &LR, adrRental Prec) {
     if (NextParent(Prec) != NULL) {

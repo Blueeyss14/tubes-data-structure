@@ -8,8 +8,11 @@ void menuUtama()
     cout << "1. Tambah Data Rental" << endl;
     cout << "2. Tampilkan Semua Data" << endl;
     cout << "3. Cari Kendaraan" << endl;
-    cout << "4. Delete Data Rental Kendaraan" << endl;
-    cout << "5. Urutkan Data Berdasarkan Harga" << endl;
+    cout << "4. Urutkan Data Berdasarkan Harga" << endl;
+    cout << "5. Rental Kendaraan" << endl;
+    cout << "6. Daftar Kendaraan Terpinjam" << endl;
+    cout << "7. Total Pendapatan Rental" << endl;
+    cout << "8. Hapus Data Rental" << endl;
     cout << "0. Keluar" << endl;
     cout << "Pilihan: ";
 }
@@ -64,15 +67,15 @@ int main()
         }
         else if (pilihan == 3)
         {
-            string namaPeminjam;
+            string namaPemilik;
             string merkKendaraan;
 
             cout << "Masukkan Nama Pemilik: ";
-            cin >> namaPeminjam;
+            cin >> namaPemilik;
             cout << "Masukkan Merk Kendaraan: ";
             cin >> merkKendaraan;
 
-            adrRental rental = findParent_Rental(LR, namaPeminjam);
+            adrRental rental = findParent_Rental(LR, namaPemilik);
             adrKendaraan kendaraan = findChild_Kendaraan(LK, merkKendaraan);
 
             adrRelation relasi = findRelation_Relation(LRelasi, rental, kendaraan);
@@ -98,61 +101,21 @@ int main()
         }
         else if (pilihan == 4)
         {
-            string namaPeminjam;
-            string merkKendaraan;
-
-            cout << "Masukkan Nama Pemilik: ";
-            cin >> namaPeminjam;
-            cout << "Masukkan Merk Kendaraan: ";
-            cin >> merkKendaraan;
-
-            adrRental rental = findParent_Rental(LR, namaPeminjam);
-            adrKendaraan kendaraan = findChild_Kendaraan(LK, merkKendaraan);
-            adrRelation relasi = findRelation_Relation(LRelasi, rental, kendaraan);
-
-            if (relasi != NULL)
-            {
-                adrRental rentalhapus;
-                adrKendaraan kendaraanhapus;
-                deleteFirstRelation_Relation(LRelasi, rentalhapus, kendaraanhapus);
-
-                if (rental != NULL)
-                {
-                    deleteFirstParent_Rental(LR, rental);
-                }
-
-                if (kendaraan != NULL)
-                {
-                    deleteFirstChild_Kendaraan(LK, kendaraan);
-                }
-                cout << "==========================================================" << endl;
-                cout << "Data Kendaraan Berhasil Dihapus" << endl;
-                cout << "==========================================================" << endl;
-
-            }
-            else
-            {
-                cout << "==========================================================" << endl;
-                cout << "Data tidak ditemukan." << endl;
-                cout << "==========================================================" << endl;
-
-            }
-        }
-        else if (pilihan == 5)
-        {
             urutkanDataBerdasarkanHarga(LK, LR, LRelasi);
             adrRental dataRental = FirstParent(LR);
             adrKendaraan dataKendaraan = FirstChild(LK);
             if (dataRental == NULL && dataKendaraan == NULL)
             {
-            cout << "\n==========================================================" << endl;
+                cout << "\n==========================================================" << endl;
                 cout << "Tidak ada data kendaraan yang tersedia." << endl;
-            cout << "==========================================================" << endl;
+                cout << "==========================================================" << endl;
             }
-            else {
-            cout << "\n==========================================================" << endl;
+            else
+            {
+                cout << "\n==========================================================" << endl;
                 cout << "Data Berhasil diurutkan" << endl;
-                while (dataRental != NULL && dataKendaraan != NULL) {
+                while (dataRental != NULL && dataKendaraan != NULL)
+                {
                     // cout << index++ << endl;
                     cout << "==========================================================" << endl;
                     cout << "Pemilik Kendaraan: " << InfoParent(dataRental).namaPemilk << endl;
@@ -162,10 +125,114 @@ int main()
                     cout << "Harga: " << InfoChild(dataKendaraan).harga << endl;
                     dataRental = NextParent(dataRental);
                     dataKendaraan = NextChild(dataKendaraan);
-            cout << "==========================================================\n" << endl;
+                    cout << "==========================================================\n"
+                         << endl;
                 }
             }
         }
+        else if (pilihan == 5)
+        {
+            string namaPemilik, merkKendaraan, namaPeminjam;
+
+            cout << "Masukkan Nama Peminjam: ";
+            cin >> namaPeminjam;
+            cout << "Masukkan Nama Pemilik: ";
+            cin >> namaPemilik;
+            cout << "Masukkan Merk Kendaraan: ";
+            cin >> merkKendaraan;
+
+            adrRental rental = findParent_Rental(LR, namaPemilik);
+            adrKendaraan kendaraan = findChild_Kendaraan(LK, merkKendaraan);
+            adrRelation relasi = findRelation_Relation(LRelasi, rental, kendaraan);
+
+            if (rental == NULL || kendaraan == NULL || relasi == NULL)
+            {
+                cout << "\n==========================================================" << endl;
+                cout << "Data tidak ditemukan atau kendaraan tidak tersedia." << endl;
+                cout << "==========================================================" << endl;
+            }
+            else
+            {
+                if (InfoParent(rental).namaPeminjam != "")
+                {
+                    cout << "\n==========================================================" << endl;
+                    cout << "Kendaraan sudah dipinjam oleh: " << InfoParent(rental).namaPeminjam << endl;
+                    cout << "==========================================================" << endl;
+                }
+                else
+                {
+                    InfoParent(rental).namaPeminjam = namaPeminjam;
+                    cout << "\n==========================================================" << endl;
+                    cout << "Kendaraan berhasil dipinjam oleh: " << namaPeminjam << endl;
+                    cout << "==========================================================" << endl;
+                }
+            }
+        }
+        else if (pilihan == 6)
+        {
+            cout << "\n==========================================================" << endl;
+            cout << "            Daftar Kendaraan yang Sedang Dipinjam         " << endl;
+            cout << "==========================================================" << endl;
+
+            adrRental rental = FirstParent(LR);
+            bool adaPeminjaman = false;
+
+            while (rental != NULL)
+            {
+                if (InfoParent(rental).namaPeminjam != "")
+                {
+                    adaPeminjaman = true;
+                    cout << "Nama Peminjam: " << InfoParent(rental).namaPeminjam << endl;
+                    cout << "Nama Pemilik Kendaraan: " << InfoParent(rental).namaPemilk << endl;
+                    cout << "Lama Peminjaman: " << InfoParent(rental).lamaPeminjaman << " jam" << endl;
+
+                    adrRelation relasi = FirstRelation(LRelasi);
+                    while (relasi != NULL)
+                    {
+                        if (RentalRelation(relasi) == rental)
+                        {
+                            cout << "Merk Kendaraan: " << InfoChild(KendaraanRelation(relasi)).merk << endl;
+                            cout << "Type Kendaraan: " << InfoChild(KendaraanRelation(relasi)).type << endl;
+                            cout << "Harga Rental: " << InfoChild(KendaraanRelation(relasi)).harga << endl;
+                        }
+                        relasi = NextRelation(relasi);
+                    }
+
+                    cout << "==========================================================" << endl;
+                }
+                rental = NextParent(rental);
+            }
+
+            if (!adaPeminjaman)
+            {
+                cout << "Tidak ada kendaraan yang sedang dipinjam." << endl;
+                cout << "==========================================================" << endl;
+            }
+        }
+        else if (pilihan == 7)
+        {
+            cout << "\n==========================================================" << endl;
+            cout << "            Total Pendapatan Rental Kendaraan            " << endl;
+            cout << "==========================================================" << endl;
+
+            int totalPendapatan = hitungTotalPendapatanRental(LRelasi);
+
+            cout << "Total Pendapatan Rental: " << totalPendapatan << " IDR" << endl;
+            cout << "==========================================================" << endl;
+        }
+        else if (pilihan == 8)
+        {
+            string namaPeminjam, namaPemilik, merkKendaraan;
+            cout << "Masukkan Nama Peminjam: ";
+            cin >> namaPeminjam;
+            cout << "Masukkan Nama Pemilik: ";
+            cin >> namaPemilik;
+            cout << "Masukkan Merk Kendaraan: ";
+            cin >> merkKendaraan;
+
+            deleteRentalData(LR, LK, LRelasi, namaPeminjam, namaPemilik, merkKendaraan);
+        }
+
         else if (pilihan == 0)
         {
             cout << "\n==========================================================" << endl;
