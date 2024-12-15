@@ -116,9 +116,11 @@ void showDataChildFromParent(ListRental LR, ListRelation LRel, string namaParent
 void showDataParentChildRelation(ListRelation LR);
 void showDataChildFromParent(ListRental LR, ListRelation LRel, string namaParent);
 void showDataParentFromChild(ListRelation LR, ListKendaraan LK, string namaChild);
+void showDataChildParentRelation(ListRelation LR);
+void countRelationFromEveryParent(ListRental LR, ListRelation LRel);
 int countRelationFromElmnParent(ListRelation LR, adrRental parent);
 int countRelationChild(ListRelation LR, adrKendaraan child);
-int countElmnChild(ListKendaraan LK, ListRelation LR);
+int countElmnChildNoRelation(ListKendaraan LK, ListRelation LR);
 void editRelation(ListRelation &LR, ListKendaraan LK, adrRental parent, string namaChildBaru);
 void urutkanDataBerdasarkanHarga(ListKendaraan &LK, ListRental &LR, ListRelation &LRelasi);
 void dataDummy(ListRelation &LR, ListRental &LRental, ListKendaraan &LKendaraan);

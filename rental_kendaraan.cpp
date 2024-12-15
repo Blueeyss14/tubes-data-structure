@@ -330,7 +330,10 @@ void showAllDataParent_Rental(ListRental LR) {
         P = FirstParent(LR);
 
         while (P != NULL) {
-            cout << InfoParent(P).namaPemilk << InfoParent(P).lamaPeminjaman << endl;
+            cout << "\n==========================================================" << endl;
+            cout <<"Pemilik: "<< InfoParent(P).namaPemilk << endl;
+            cout << "Lama Peminjaman: " << InfoParent(P).lamaPeminjaman << endl;
+            cout << "==========================================================" << endl;
             P = NextParent(P);
         }
     } else {
@@ -344,9 +347,12 @@ void showAllDataKendaraan_Kendaraan(ListKendaraan LK) {
         P = FirstChild(LK);
 
         while (P != NULL) {
+            cout << "\n==========================================================" << endl;
             cout << "Nama Kendaraan" << InfoChild(P).merk << endl;
             cout << "Type"<< InfoChild(P).type << endl;
             cout << InfoChild(P).harga << endl;
+            cout << "==========================================================" << endl;
+            P = NextChild(P);
         }
     } else {
         cout << "List Kosong" << endl;
@@ -358,7 +364,7 @@ void showAllDataRelation_Relation(ListRelation LR) {
     if (FirstRelation(LR) != NULL) {
         P = FirstRelation(LR);
         while (P != NULL) {
-            cout << "==========================================================" << endl;
+            cout << "\n==========================================================" << endl;
             cout << "Peminjam: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
             cout << "Lama Peminjaman: " << InfoParent(RentalRelation(P)).lamaPeminjaman << endl;
 
@@ -385,36 +391,102 @@ void showDataChildFromParent(ListRental LR, ListRelation LRel, string namaParent
         while (rel != NULL) {
             if (RentalRelation(rel) == parent) { 
                 adrKendaraan child = KendaraanRelation(rel);
+                cout << "\n==========================================================" << endl;
                 cout << "Nama Kendaraan: " << InfoParent(child).merk << endl;
                 cout << "Tipe: " << InfoParent(child).type << endl;
                 cout << "Harga: " << InfoParent(child).harga << endl;
+                cout << "==========================================================" << endl;
                 found = true;
             }
             rel = NextRelation(rel);
         }
 
         if (!found) {
+            cout << "\n==========================================================" << endl;
             cout << "Tidak ada kendaraan untuk peminjam ini." << endl;
+            cout << "==========================================================" << endl;
         }
     } else {
+        cout << "\n==========================================================" << endl;
         cout << "Peminjam tidak ditemukan." << endl;
+        cout << "==========================================================" << endl;
     }
 }
 
 void showDataParentChildRelation(ListRelation LR) {
-    // show setiap data parent beserta data child yang berelasi dengannya 
-
-    adrRelation P;
-    if (FirstRelation(LR) != NULL) {
-        P = FirstRelation(LR);
-        while (P != NULL) {
-            cout << "Pemilik: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
-            cout << "Kendaraan: " << InfoChild(KendaraanRelation(P)).merk << endl;
-            P = NextRelation(P);
-        }
-    } else {
-        cout << "List Kosong" << endl;
+    if (FirstRelation(LR) == NULL) {
+        cout << "\n==========================================================" << endl;
+        cout << "Tidak ada data relasi" << endl;
+        cout << "==========================================================" << endl;
+        return;
     }
+
+    adrRelation P = FirstRelation(LR);
+    adrRental currentParent = NULL;
+    int count = 1;
+
+    cout << "\n==========================================================" << endl;
+    cout << "        Data Parent dan Child yang Berelasi        " << endl;
+    cout << "==========================================================" << endl;
+
+    while (P != NULL) {
+        if (currentParent != RentalRelation(P)) {
+            currentParent = RentalRelation(P);
+            cout << "\nData Parent ke-" << count << endl;
+            cout << "Nama Pemilik: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
+            cout << "Lama Peminjaman: " << InfoParent(RentalRelation(P)).lamaPeminjaman << " jam" << endl;
+            if (InfoParent(RentalRelation(P)).namaPeminjam != "") {
+                cout << "Nama Peminjam: " << InfoParent(RentalRelation(P)).namaPeminjam << endl;
+            }
+            cout << "\nKendaraan yang dimiliki:" << endl;
+            count++;
+        }
+
+        cout << "- Merk: " << InfoChild(KendaraanRelation(P)).merk << endl;
+        cout << "  Type: " << InfoChild(KendaraanRelation(P)).type << endl;
+        cout << "  Harga: Rp" << InfoChild(KendaraanRelation(P)).harga << endl;
+
+        P = NextRelation(P);
+    }
+    cout << "==========================================================" << endl;
+}
+
+void showDataChildParentRelation(ListRelation LR) {
+    if (FirstRelation(LR) == NULL) {
+        cout << "\n==========================================================" << endl;
+        cout << "Tidak ada data relasi" << endl;
+        cout << "==========================================================" << endl;
+        return;
+    }
+
+    adrRelation P = FirstRelation(LR);
+    adrKendaraan currentChild = NULL;
+    int count = 1;
+
+    cout << "\n==========================================================" << endl;
+    cout << "        Data Kendaraan dan Pemiliknya        " << endl;
+    cout << "==========================================================" << endl;
+
+    while (P != NULL) {
+        if (currentChild != KendaraanRelation(P)) {
+            currentChild = KendaraanRelation(P);
+            cout << "\nData Kendaraan ke-" << count << endl;
+            cout << "Merk: " << InfoChild(KendaraanRelation(P)).merk << endl;
+            cout << "Type: " << InfoChild(KendaraanRelation(P)).type << endl;
+            cout << "Harga: Rp" << InfoChild(KendaraanRelation(P)).harga << endl;
+            cout << "\nDimiliki oleh:" << endl;
+            count++;
+        }
+
+        cout << "- Nama Pemilik: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
+        cout << "  Lama Peminjaman: " << InfoParent(RentalRelation(P)).lamaPeminjaman << " jam" << endl;
+        if (InfoParent(RentalRelation(P)).namaPeminjam != "") {
+            cout << "  Dipinjam oleh: " << InfoParent(RentalRelation(P)).namaPeminjam << endl;
+        }
+
+        P = NextRelation(P);
+    }
+    cout << "==========================================================" << endl;
 }
 
 void showDataParentFromChild(ListRelation LR, ListKendaraan LK, string namaChild) {
@@ -427,18 +499,77 @@ void showDataParentFromChild(ListRelation LR, ListKendaraan LK, string namaChild
 
         while (P != NULL) {
             if (KendaraanRelation(P) == child) {
+                cout << "\n==========================================================" << endl;
                 cout << "Pemilik: " << InfoParent(RentalRelation(P)).namaPemilk << endl;
                 cout << "Lama Peminjaman: " << InfoParent(RentalRelation(P)).lamaPeminjaman << endl;
+                cout << "==========================================================" << endl;
                 found = true;
             }
             P = NextRelation(P);
         }
         if (!found) {
+            cout << "\n==========================================================" << endl;
             cout << "Tidak ada peminjam untuk kendaraan ini." << endl;
+            cout << "==========================================================" << endl;
         }
     } else {
+        cout << "\n==========================================================" << endl;
         cout << "Kendaraan tidak ditemukan." << endl;
+        cout << "==========================================================" << endl;
     }
+}
+
+void countRelationFromEveryParent(ListRental LR, ListRelation LRel) {
+    if (FirstParent(LR) == NULL) {
+        cout << "\n==========================================================" << endl;
+        cout << "Tidak ada data parent" << endl;
+        cout << "==========================================================" << endl;
+        return;
+    }
+
+    cout << "\n==========================================================" << endl;
+    cout << "    Jumlah Relasi dari Setiap Parent (Pemilik Kendaraan)    " << endl;
+    cout << "==========================================================" << endl;
+
+    adrRental P = FirstParent(LR);
+    int totalParent = 0;
+    int totalRelasi = 0;
+
+    while (P != NULL) {
+        int count = countRelationFromElmnParent(LRel, P);
+        totalParent++;
+        totalRelasi += count;
+
+        cout << "Parent ke-" << totalParent << endl;
+        cout << "Nama Pemilik: " << InfoParent(P).namaPemilk << endl;
+        cout << "Lama Peminjaman: " << InfoParent(P).lamaPeminjaman << " jam" << endl;
+        if (InfoParent(P).namaPeminjam != "") {
+            cout << "Nama Peminjam: " << InfoParent(P).namaPeminjam << endl;
+        }
+        cout << "Jumlah Kendaraan: " << count << " kendaraan" << endl;
+
+        if (count > 0) {
+            cout << "\nDetail Kendaraan:" << endl;
+            adrRelation rel = FirstRelation(LRel);
+            int kendaraanKe = 1;
+            while (rel != NULL) {
+                if (RentalRelation(rel) == P) {
+                    cout << kendaraanKe << ". Merk: " << InfoChild(KendaraanRelation(rel)).merk << endl;
+                    cout << "   Type: " << InfoChild(KendaraanRelation(rel)).type << endl;
+                    cout << "   Harga: Rp" << InfoChild(KendaraanRelation(rel)).harga << endl;
+                    kendaraanKe++;
+                }
+                rel = NextRelation(rel);
+            }
+        }
+        cout << "==========================================================" << endl;
+        P = NextParent(P);
+    }
+
+    cout << "\nRingkasan:" << endl;
+    cout << "Total Parent: " << totalParent << endl;
+    cout << "Total Relasi: " << totalRelasi << endl;
+    cout << "==========================================================" << endl;
 }
 
 int countRelationFromElmnParent(ListRelation LR, adrRental parent) {
@@ -473,17 +604,26 @@ int countRelationChild(ListRelation LR, adrKendaraan child) {
     return count;
 }
 
-int countElmnChild(ListKendaraan LK, ListRelation LR) {
-    // count elemen child yang tidak memiliki relasi
-
+int countElmnChildNoRelation(ListKendaraan LK, ListRelation LR) {
     int count = 0;
     adrKendaraan child = FirstChild(LK);
 
-    //cek klaau childnya gak ada
     while (child != NULL) {
-        if (countRelationChild(LR, child) == 0) {
+        bool adaRelation = false;
+        adrRelation rel = FirstRelation(LR);
+        
+        while (rel != NULL) {
+            if (KendaraanRelation(rel) == child) {
+                adaRelation = true;
+                break;
+            }
+            rel = NextRelation(rel);
+        }
+        
+        if (!adaRelation) {
             count++;
         }
+        
         child = NextChild(child);
     }
     
@@ -491,16 +631,18 @@ int countElmnChild(ListKendaraan LK, ListRelation LR) {
 }
 
 void editRelation(ListRelation &LR, ListKendaraan LK, adrRental parent, string namaChildBaru) {
-    // Mengganti child dari parent tertentu
-    
     if (parent == NULL) {
-        cout << "Parent tidak ditemukan." << endl;
+        cout << "\n==========================================================" << endl;
+        cout << "Parent tidak ditemukan" << endl;
+        cout << "==========================================================" << endl;
         return;
     }
 
     adrKendaraan childBaru = findChild_Kendaraan(LK, namaChildBaru);
     if (childBaru == NULL) {
-        cout << "Child baru tidak ditemukan." << endl;
+        cout << "\n==========================================================" << endl;
+        cout << "Kendaraan baru tidak ditemukan" << endl;
+        cout << "==========================================================" << endl;
         return;
     }
 
@@ -511,13 +653,18 @@ void editRelation(ListRelation &LR, ListKendaraan LK, adrRental parent, string n
         if (RentalRelation(rel) == parent) {
             KendaraanRelation(rel) = childBaru;
             found = true;
+            break;
         }
         rel = NextRelation(rel);
     }
 
     if (found) {
-        cout << "Relasi berhasil diupdate." << endl;
+        cout << "\n==========================================================" << endl;
+        cout << "Relasi berhasil diupdate" << endl;
+        cout << "==========================================================" << endl;
     } else {
-        cout << "Tidak ada relasi yang ditemukan untuk parent ini." << endl;
+        cout << "\n==========================================================" << endl;
+        cout << "Parent tidak memiliki relasi yang bisa diupdate" << endl;
+        cout << "==========================================================" << endl;
     }
 }

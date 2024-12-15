@@ -6,15 +6,67 @@ void menuUtama()
 {
     cout << "=== APLIKASI RENTAL KENDARAAN ===" << endl;
     cout << "1. Tambah Data Rental" << endl;
-    cout << "2. Tampilkan Semua Data" << endl;
+    /*Point a, b, c
+        > Saat program dijalankan maka akan diminta inputan dari parent, child & relasi
+            pada aplikasi ini menggunakan:
+            - insertFirstParent_Rental()
+            - insertFirstChild_Kendaraan()
+            - inserFirstRelation_Relation()
+        > Ketiga fungsi ini bisa dilihat di "rental_kendaraan.cpp"
+        > Lebih spesifik bisa dilihat di "main.cpp" pada pilihan == 1
+    */
+    cout << "2. Tampilkan Semua Data (Relasi)" << endl;
+    /*
+        > Menampilkan seluruh data termasuk dataDummy menggunakan relasi, parent dan child
+            kasus mencakup tiga fungsi utama:
+            - ShowAllParent()
+            - ShowAllList()
+            - ShowRelation()
+        > Fungsi ini saling terhubung yang bisa dilihat di "rental_kendaraan.cpp"
+        > Fungsi dataDummy bisa dilihat di "data_dummy.cpp"
+        > Lebih spesifik bisa dilihat di "main.cpp" pada pilihan == 2
+    */
     cout << "3. Cari Kendaraan" << endl;
+    /*Point g, h, i
+        > Program mencari data yang dimana ketika program meminta inputan dari find Parent, Child dan Relation
+            - findParent_Rental()
+            - findChild_Kendaraan()
+            - findRelation_Relation()
+        >Lebih spesifik bisa dilihat di "main.cpp" pada pilihan == 3
+    */
     cout << "4. Urutkan Data Berdasarkan Harga" << endl;
+    /*
+        > Fungsi ini bisa dilihat di rentalFn.cpp
+    */
     cout << "5. Rental Kendaraan" << endl;
     cout << "6. Daftar Kendaraan Terpinjam" << endl;
     cout << "7. Total Pendapatan Rental" << endl;
+    /*
+        > Fungsi ini bisa dilihat di rentalFn.cpp
+    */
     cout << "8. Hapus Data Rental" << endl;
-    cout << "9. Show setiap data parent tertentu" << endl;
-    cout << "10. Show setiap data child tertentu" << endl;
+    /*Point d, e, f:
+        deleteRentalData {
+            berisi:
+            - deleteParent
+            - deleteRelasi
+            - deleteChild
+        }
+        ketiga fungsi itu dipanggil ke deleteRentalData() yang bisa dilihat di "rentalFn.cpp"
+        dan ketiga fungsi itu berada di "rental_kendaraan.cpp"
+    */
+   
+   //Point j, k, l, m, n, o, p, q, r, s
+    cout << "9. Show all data List Parent" << endl;
+    cout << "10. Show all data List Child" << endl;
+    cout << "11. Show data parent tertentu" << endl;
+    cout << "12. Show data child tertentu" << endl;
+    cout << "13. Show setiap data parent beserta data child yang bereleasi" << endl;
+    cout << "14. Show data child beserta data parent yang masing masing child miliki" << endl;
+    cout << "15. Count relation dari setiap element parent" << endl;
+    cout << "16. Count relation yang dimiliki oleh child tertentu" << endl;
+    cout << "17. Count element child yang tidak memiliki relasi" << endl;
+    cout << "18. Edit relasi/mengganti child dari parent tertentu" << endl;
     cout << "0. Keluar" << endl;
     cout << "Pilihan: ";
 }
@@ -60,7 +112,9 @@ int main()
             insertFirstChild_Kendaraan(LK, newKendaraan);
             insertFirstRelation_Relation(LRelasi, newRental, newKendaraan);
 
+            cout << "\n==========================================================" << endl;
             cout << "Data Rental Berhasil Ditambahkan!" << endl;
+            cout << "==========================================================" << endl;
         }
         else if (pilihan == 2)
         {
@@ -116,6 +170,7 @@ int main()
             {
                 cout << "\n==========================================================" << endl;
                 cout << "Data Berhasil diurutkan" << endl;
+                cout << "==========================================================" << endl;
                 while (dataRental != NULL && dataKendaraan != NULL)
                 {
                     // cout << index++ << endl;
@@ -207,6 +262,7 @@ int main()
 
             if (!adaPeminjaman)
             {
+            cout << "\n==========================================================" << endl;
                 cout << "Tidak ada kendaraan yang sedang dipinjam." << endl;
                 cout << "==========================================================" << endl;
             }
@@ -235,7 +291,14 @@ int main()
 
             deleteRentalData(LRelasi, LR, LK, namaPemilik, merkKendaraan, namaPeminjam);
         }
-        else if (pilihan == 9)
+
+        else if (pilihan == 9) {
+            showAllDataParent_Rental(LR);
+        }
+        else if (pilihan == 10) {
+            showAllDataKendaraan_Kendaraan(LK);
+        }
+        else if (pilihan == 11)
         {
             string namaKendaraan;
             cout << "Masukkan Nama Kendaraan (Parent): ";
@@ -244,7 +307,7 @@ int main()
             showDataParentFromChild(LRelasi, LK, namaKendaraan);
         }
 
-        else if (pilihan == 10)
+        else if (pilihan == 12)
         {
             string namaChild;
             cout << "Masukkan Nama Pemilik (Child): ";
@@ -252,7 +315,67 @@ int main()
 
             showDataChildFromParent(LR, LRelasi, namaChild);
         }
+        else if (pilihan == 13)
+        {
+            showDataParentChildRelation(LRelasi);
+        }
 
+        else if (pilihan == 14)
+        {
+            showDataChildParentRelation(LRelasi);
+        }
+        else if (pilihan == 15)
+        {
+            countRelationFromEveryParent(LR, LRelasi);
+        }
+        else if (pilihan == 16)
+        {
+            string merkKendaraan;
+            cout << "Masukkan Merk Kendaraan: ";
+            cin >> merkKendaraan;
+
+            adrKendaraan child = findChild_Kendaraan(LK, merkKendaraan);
+            if (child != NULL)
+            {
+                int jumlahRelasi = countRelationChild(LRelasi, child);
+                cout << "\n==========================================================" << endl;
+                cout << "Kendaraan " << merkKendaraan << " memiliki " << jumlahRelasi << " relasi" << endl;
+                cout << "==========================================================" << endl;
+            }
+            else
+            {
+                cout << "\n==========================================================" << endl;
+                cout << "Kendaraan dengan merk " << merkKendaraan << " tidak ditemukan" << endl;
+                cout << "==========================================================" << endl;
+            }
+        }
+        else if (pilihan == 17)
+        {
+            int jumlahChildTanpaRelasi = countElmnChildNoRelation(LK, LRelasi);
+            cout << "\n==========================================================" << endl;
+            cout << "Jumlah kendaraan yang tidak memiliki relasi: " << jumlahChildTanpaRelasi << endl;
+            cout << "==========================================================" << endl;
+        }
+        else if (pilihan == 18)
+        {
+            string namaPemilik, merkKendaraanBaru;
+            cout << "Masukkan Nama Pemilik: ";
+            cin >> namaPemilik;
+            cout << "Masukkan Merk Kendaraan Baru: ";
+            cin >> merkKendaraanBaru;
+
+            adrRental parent = findParent_Rental(LR, namaPemilik);
+            if (parent != NULL)
+            {
+                editRelation(LRelasi, LK, parent, merkKendaraanBaru);
+            }
+            else
+            {
+                cout << "\n==========================================================" << endl;
+                cout << "Pemilik dengan nama " << namaPemilik << " tidak ditemukan" << endl;
+                cout << "==========================================================" << endl;
+            }
+        }
         else if (pilihan == 0)
         {
             cout << "\n==========================================================" << endl;
