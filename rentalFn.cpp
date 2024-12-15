@@ -62,15 +62,26 @@ int hitungTotalPendapatanRental(ListRelation LRelasi)
 void deleteRentalData(ListRelation &LRelasi, ListRental &LR, ListKendaraan &LKendaraan, string namaPemilik, string merkKendaraan, string namaPeminjam) {
     adrRental rental = findParent_Rental(LR, namaPemilik);
     adrKendaraan kendaraan = findChild_Kendaraan(LKendaraan, merkKendaraan);
-    adrRelation relasi = findRelation_Relation(LRelasi, rental, kendaraan);
+    
+    if (rental != NULL && kendaraan != NULL) {
+        adrRelation relasi = findRelation_Relation(LRelasi, rental, kendaraan);
+        
+        if (relasi != NULL && InfoParent(rental).namaPeminjam == namaPeminjam) {
+            deleteFirstRelation_Relation(LRelasi, relasi);
+            deleteFirstParent_Rental(LR, rental);
+            deleteFirstChild_Kendaraan(LKendaraan, kendaraan);
 
-    if (relasi != NULL && InfoParent(rental).namaPemilk == namaPemilik && InfoParent(rental).namaPeminjam == namaPeminjam) {
-        deleteFirstRelation_Relation(LRelasi, rental, kendaraan);
-        deleteFirstParent_Rental(LR, rental);
-        deleteFirstChild_Kendaraan(LKendaraan, kendaraan);
-
-        cout << "Data Rental Berhasil Dihapus!" << endl;
+            cout << "\n==========================================================" << endl;
+            cout << "Data Rental Berhasil Dihapus!" << endl;
+            cout << "==========================================================" << endl;
+        } else {
+            cout << "\n==========================================================" << endl;
+            cout << "Data tidak ditemukan." << endl;
+            cout << "==========================================================" << endl;
+        }
     } else {
-        cout << "Data tidak ditemukan atau kendaraan tidak dipinjam oleh peminjam yang dimaksud." << endl;
+        cout << "\n==========================================================" << endl;
+        cout << "Data Rental atau Kendaraan tidak ditemukan." << endl;
+        cout << "==========================================================" << endl;
     }
 }

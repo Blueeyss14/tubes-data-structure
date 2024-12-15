@@ -140,56 +140,49 @@ void insertAfterRelation_Relation(ListRelation &LR, adrRelation Prec, adrRental 
     }
 }
 
-void deleteFirstParent_Rental(ListRental &LR, adrRental &P) {
-    if (FirstParent(LR) != NULL) {
-        P = FirstParent(LR);
-        if (NextParent(P) != NULL) {
-            FirstParent(LR) = NextParent(P);
+void deleteFirstParent_Rental(ListRental &LR, adrRental rental) {
+    if (rental == FirstParent(LR)) {
+        FirstParent(LR) = NextParent(rental);
+        if (FirstParent(LR) != NULL) {
             PrevParent(FirstParent(LR)) = NULL;
-        } else {
-            FirstParent(LR) = NULL;
-            LastParent(LR) = NULL;
         }
-
-        NextParent(P) = NULL;
-        PrevParent(P) = NULL;
     } else {
-        P = NULL;
+        if (NextParent(rental) != NULL) {
+            PrevParent(NextParent(rental)) = PrevParent(rental);
+        }
+        if (PrevParent(rental) != NULL) {
+            NextParent(PrevParent(rental)) = NextParent(rental);
+        }
     }
 }
 
-
-
-void deleteFirstChild_Kendaraan(ListKendaraan &LK, adrKendaraan P) {
-    if (FirstChild(LK) != NULL) {
-        P = FirstChild(LK);
-        FirstChild(LK) = NextChild(P);
-        
-        NextChild(P) = NULL;
+void deleteFirstChild_Kendaraan(ListKendaraan &LK, adrKendaraan kendaraan) {
+    if (kendaraan == FirstChild(LK)) {
+        FirstChild(LK) = NextChild(kendaraan);
     } else {
-        P = NULL;
+        adrKendaraan prev = FirstChild(LK);
+        while (prev != NULL && NextChild(prev) != kendaraan) {
+            prev = NextChild(prev);
+        }
+        if (prev != NULL) {
+            NextChild(prev) = NextChild(kendaraan);
+        }
     }
 }
 
-
-void deleteFirstRelation_Relation(ListRelation &LRelasi, adrRental &P, adrKendaraan &K) {
-    if (FirstRelation(LRelasi) != NULL) {
-        adrRelation R = FirstRelation(LRelasi);
-        P = RentalRelation(R);
-        K = KendaraanRelation(R);
-        
-        FirstRelation(LRelasi) = NextRelation(R);
-        
-        if (FirstRelation(LRelasi) == NULL) {
-            LastRelation(LRelasi) = NULL;
+void deleteFirstRelation_Relation(ListRelation &LRelasi, adrRelation relasi) {
+    if (relasi == FirstRelation(LRelasi)) {
+        FirstRelation(LRelasi) = NextRelation(relasi);
+        if (FirstRelation(LRelasi) != NULL) {
+            PrevRelation(FirstRelation(LRelasi)) = NULL;
         }
-        
-        NextRelation(R) = NULL;
-        RentalRelation(R) = NULL;
-        KendaraanRelation(R) = NULL;
     } else {
-        P = NULL;
-        K = NULL;
+        if (NextRelation(relasi) != NULL) {
+            PrevRelation(NextRelation(relasi)) = PrevRelation(relasi);
+        }
+        if (PrevRelation(relasi) != NULL) {
+            NextRelation(PrevRelation(relasi)) = NextRelation(relasi);
+        }
     }
 }
 
