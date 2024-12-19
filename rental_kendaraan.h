@@ -29,13 +29,14 @@ using namespace std;
 #define RentalRelation(p) p->Rental
 #define KendaraanRelation(p) p->Kendaraan
 
-
+//parent
 struct rental {
     string namaPemilk;
     int lamaPeminjaman;
     string namaPeminjam;
 };
 
+//child
 struct kendaraan {
     string merk, type;
     int harga;

@@ -348,9 +348,9 @@ void showAllDataKendaraan_Kendaraan(ListKendaraan LK) {
 
         while (P != NULL) {
             cout << "\n==========================================================" << endl;
-            cout << "Nama Kendaraan" << InfoChild(P).merk << endl;
-            cout << "Type"<< InfoChild(P).type << endl;
-            cout << InfoChild(P).harga << endl;
+            cout << "Nama Kendaraan: " << InfoChild(P).merk << endl;
+            cout << "Type: "<< InfoChild(P).type << endl;
+            cout << "Harga: "<< InfoChild(P).harga << endl;
             cout << "==========================================================" << endl;
             P = NextChild(P);
         }

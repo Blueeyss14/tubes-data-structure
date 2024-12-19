@@ -301,7 +301,7 @@ int main()
         else if (pilihan == 11)
         {
             string namaKendaraan;
-            cout << "Masukkan Nama Kendaraan (Parent): ";
+            cout << "Masukkan Nama Kendaraan: ";
             cin >> namaKendaraan;
 
             showDataParentFromChild(LRelasi, LK, namaKendaraan);
@@ -310,7 +310,7 @@ int main()
         else if (pilihan == 12)
         {
             string namaChild;
-            cout << "Masukkan Nama Pemilik (Child): ";
+            cout << "Masukkan Nama Pemilik: ";
             cin >> namaChild;
 
             showDataChildFromParent(LR, LRelasi, namaChild);
